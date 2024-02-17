@@ -13,17 +13,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-#  liquibase:
-#    enabled: true
-#    change-log: classpath:db/migrations/changelog-master.xml
-  data:
-    redis:
-      timeout: 2s
-  cache:
-    type: redis
-    redis:
-      cache-null-values: false
-      time-to-live: 60
   cloud:
     gateway:
       globalcors:
