@@ -1,0 +1,66 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/hs_dzbb?currentSchema=user_service&user=hp&password=SFgIgwXeJD5QNWpFcMLDaVvL5BFANp0K
+    username: hp
+    password: SFgIgwXeJD5QNWpFcMLDaVvL5BFANp0K
+
+#  data:
+#    redis:
+#      port: 26379
+#      password:
+#      sentinel:
+#        master: mymaster
+#        nodes: localhost
+#
+#  cache:
+#    type: redis
+#    redis:
+#      cache-null-values: false
+#      time-to-live: 300000
+
+  cloud:
+      gateway:
+        globalcors:
+          corsConfigurations:
+            '[/**]':
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowedHeaders: "*"
+        routes:
+          - id: authentication-service
+            uri: http://auth-service:8080
+            metadata:
+              public: true
+              docs: /api/docs
+            predicates:
+              - Path=/api/auth/**
+            filters:
+              - RewritePath=/api/auth/?(?<segment>.*), /auth/$\{segment}
+          - id: user-service
+            uri: http://user-service:8080
+            metadata:
+              public: true
+              docs: /api/docs
+            predicates:
+              - Path=/api/user/**
+            filters:
+              - RewritePath=/api/user/?(?<segment>.*), /user/$\{segment}
+          - id: doctor-service
+            uri: http://doctor-service:8080
+            metadata:
+              public: true
+              docs: /api/docs
+            predicates:
+              - Path=/api/doctor/**
+            filters:
+              - RewritePath=/api/doctor/?(?<segment>.*), /doctor/$\{segment}
+          - id: medicine-service
+            uri: http://medicine-service:8080
+            metadata:
+              public: true
+              docs: /api/docs
+            predicates:
+              - Path=/api/medicine/**
+            filters:
+              - RewritePath=/api/medicine/?(?<segment>.*), /medicine/$\{segment}

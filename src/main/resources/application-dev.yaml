@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-cn8227icn0vc738kee20-a.oregon-postgres.render.com:5432/hs_dzbb?currentSchema=hp&user=hp&password=SFgIgwXeJD5QNWpFcMLDaVvL5BFANp0K
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/hs_dzbb?currentSchema=user_service&user=hp&password=SFgIgwXeJD5QNWpFcMLDaVvL5BFANp0K
     username: hp
     password: SFgIgwXeJD5QNWpFcMLDaVvL5BFANp0K
 
