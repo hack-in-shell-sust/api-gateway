@@ -5,7 +5,7 @@ spring:
   application:
     name: api-gateway
   profiles:
-    active: docker
+    active: dev
   datasource:
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -69,7 +69,12 @@ management:
   tracing:
     sampling:
       probability: 1
+    enabled: false
+
+
 
 logging:
   level:
     root: debug
+
+

@@ -5,20 +5,6 @@ spring:
     username: hp
     password: SFgIgwXeJD5QNWpFcMLDaVvL5BFANp0K
 
-#  data:
-#    redis:
-#      port: 26379
-#      password:
-#      sentinel:
-#        master: mymaster
-#        nodes: localhost
-#
-#  cache:
-#    type: redis
-#    redis:
-#      cache-null-values: false
-#      time-to-live: 300000
-
   cloud:
     gateway:
       globalcors:
@@ -30,38 +16,50 @@ spring:
       routes:
         - id: authentication-service
           uri: http://localhost:8684
-          metadata:
-            public: true
-            docs: /api/docs
           predicates:
             - Path=/api/auth/**
           filters:
-            - RewritePath=/api/auth/?(?<segment>.*), /auth/$\{segment}
+            - RewritePath=/api/auth/(?<segment>.*), /auth/${segment}
         - id: user-service
           uri: http://localhost:8688
-          metadata:
-            public: true
-            docs: /api/docs
           predicates:
             - Path=/api/user/**
           filters:
-            - RewritePath=/api/user/?(?<segment>.*), /user/$\{segment}
+            - RewritePath=/api/user/(?<segment>.*), /user/${segment}
         - id: doctor-service
           uri: http://localhost:8690
-          metadata:
-            public: true
-            docs: /api/docs
           predicates:
             - Path=/api/doctor/**
           filters:
-            - RewritePath=/api/doctor/?(?<segment>.*), /doctor/$\{segment}
+            - RewritePath=/api/doctor/(?<segment>.*), /doctor/${segment}
         - id: medicine-service
           uri: http://localhost:8692
-          metadata:
-            public: true
-            docs: /api/docs
           predicates:
             - Path=/api/medicine/**
           filters:
-            - RewritePath=/api/medicine/?(?<segment>.*), /medicine/$\{segment}
+            - RewritePath=/api/medicine/(?<segment>.*), /medicine/${segment}
 
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+        primaryName: API Gateway Service
+      - url: http://localhost:8684/v3/api-docs
+        name: Auth Service
+        primaryName: Auth Service
+      - url: http://localhost:8688/v3/api-docs
+        name: User Service
+        primaryName: User Service
+      - url: http://localhost:8690/v3/api-docs
+        name: Doctor Service
+        primaryName: Doctor Service
+      - url: http://localhost:8692/v3/api-docs
+        name: Medicine Service
+        primaryName: Medicine Service

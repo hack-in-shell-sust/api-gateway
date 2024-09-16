@@ -64,3 +64,28 @@ spring:
               - Path=/api/medicine/**
             filters:
               - RewritePath=/api/medicine/?(?<segment>.*), /medicine/$\{segment}
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+        primaryName: API Gateway Service
+      - url: http://auth-service:8080/v3/api-docs
+        name: Auth Service
+        primaryName: Auth Service
+      - url: http://user-service:8080/v3/api-docs
+        name: User Service
+        primaryName: User Service
+      - url: http://doctor-service:8080/v3/api-docs
+        name: Doctor Service
+        primaryName: Doctor Service
+      - url: http://medicine-service:8080/v3/api-docs
+        name: Medicine Service
+        primaryName: Medicine Service

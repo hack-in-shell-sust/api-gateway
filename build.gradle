@@ -39,12 +39,22 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 //    implementation 'org.liquibase:liquibase-core'
     implementation 'com.github.loki4j:loki-logback-appender:1.4.2'
+//    implementation 'org.springdoc:springdoc-openapi-core:1.1.49'
 
-    implementation platform('io.micrometer:micrometer-bom:1.11.5')
+
+//    implementation platform('io.micrometer:micrometer-bom:1.11.5')
 //    implementation 'io.micrometer:micrometer-observation'
-    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
-    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
-    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+//    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+//    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+//    implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.8.0'
+//    implementation 'org.webjars:webjars-locator:0.52'
+//    implementation 'org.springdoc:springdoc-openapi-webflux-core:1.8.0'
+//    implementation 'org.springdoc:springdoc-openapi-ui:1.5.9'
+    implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0'
+
+
+
+//    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
     compileOnly 'org.projectlombok:lombok'
 
