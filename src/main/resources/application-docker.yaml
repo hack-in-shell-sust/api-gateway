@@ -5,65 +5,67 @@ spring:
     username: hp
     password: SFgIgwXeJD5QNWpFcMLDaVvL5BFANp0K
 
-#  data:
-#    redis:
-#      port: 26379
-#      password:
-#      sentinel:
-#        master: mymaster
-#        nodes: localhost
-#
-#  cache:
-#    type: redis
-#    redis:
-#      cache-null-values: false
-#      time-to-live: 300000
+  #  data:
+  #    redis:
+  #      port: 26379
+  #      password:
+  #      sentinel:
+  #        master: mymaster
+  #        nodes: localhost
+  #
+  #  cache:
+  #    type: redis
+  #    redis:
+  #      cache-null-values: false
+  #      time-to-live: 300000
 
   cloud:
-      gateway:
-        globalcors:
-          corsConfigurations:
-            '[/**]':
-              allowedOrigins: "*"
-              allowedMethods: "*"
-              allowedHeaders: "*"
-        routes:
-          - id: authentication-service
-            uri: ${AUTH_SERVICE_URL_DOCKER_LOCAL}
-            metadata:
-              public: true
-              docs: /api/docs
-            predicates:
-              - Path=/api/auth/**
-            filters:
-              - RewritePath=/api/auth/?(?<segment>.*), /auth/$\{segment}
-          - id: user-service
-            uri: ${USER_SERVICE_URL_DOCKER_LOCAL}
-            metadata:
-              public: true
-              docs: /api/docs
-            predicates:
-              - Path=/api/user/**
-            filters:
-              - RewritePath=/api/user/?(?<segment>.*), /user/$\{segment}
-          - id: doctor-service
-            uri: ${DOCTOR_SERVICE_URL_DOCKER_LOCAL}
-            metadata:
-              public: true
-              docs: /api/docs
-            predicates:
-              - Path=/api/doctor/**
-            filters:
-              - RewritePath=/api/doctor/?(?<segment>.*), /doctor/$\{segment}
-          - id: medicine-service
-            uri: ${MEDICINE_SERVICE_URL_DOCKER_LOCAL}
-            metadata:
-              public: true
-              docs: /api/docs
-            predicates:
-              - Path=/api/medicine/**
-            filters:
-              - RewritePath=/api/medicine/?(?<segment>.*), /medicine/$\{segment}
+    gateway:
+      default-filters:
+        - PreserveHostHeader # Preserves the original Host header for forwarded requests
+      globalcors:
+        corsConfigurations:
+          '[/**]': # Allow all paths
+            allowedOrigins: "*" # Allow all origins
+            allowedMethods: "*" # Allow all HTTP methods
+            allowedHeaders: "*" # Allow all headers
+            allowCredentials: true # If cookies or credentials are used
+      routes:
+        - id: authentication-service
+          uri: ${AUTH_SERVICE_URL_DOCKER_LOCAL}
+          predicates:
+            - Path=/api/auth/** # Match all /api/auth/** requests
+          filters:
+            - StripPrefix=1 # Removes /api from the path, sending /auth/** to the backend
+          metadata:
+            public: true
+
+        - id: user-service
+          uri: ${USER_SERVICE_URL_DOCKER_LOCAL}
+          predicates:
+            - Path=/api/user/** # Match all /api/user/** requests
+          filters:
+            - StripPrefix=1 # Removes /api from the path, sending /user/** to the backend
+          metadata:
+            public: true
+
+        - id: doctor-service
+          uri: ${DOCTOR_SERVICE_URL_DOCKER_LOCAL}
+          predicates:
+            - Path=/api/doctor/** # Match all /api/doctor/** requests
+          filters:
+            - StripPrefix=1 # Removes /api from the path, sending /doctor/** to the backend
+          metadata:
+            public: true
+
+        - id: medicine-service
+          uri: ${MEDICINE_SERVICE_URL_DOCKER_LOCAL}
+          predicates:
+            - Path=/api/medicine/** # Match all /api/medicine/** requests
+          filters:
+            - StripPrefix=1 # Removes /api from the path, sending /medicine/** to the backend
+          metadata:
+            public: true
 
 springdoc:
   enable-native-support: true
